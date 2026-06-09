@@ -1,0 +1,20 @@
+services:
+  fet-cl-rest:
+    build:
+      context: .
+      args:
+        FET_VERSION: "7.8.6"
+    image: fet-cl-rest:latest
+    ports:
+      - "8000:8000"
+    environment:
+      FETREST_MAX_CONCURRENT_JOBS: "4"
+      FETREST_MAX_UPLOAD_BYTES: "26214400"   # 25 MiB
+    volumes:
+      # Persist job workdirs across restarts (optional; state registry is still
+      # in-memory, so job metadata is lost on restart even with this volume).
+      - fet-jobs:/var/lib/fet-cl-rest/jobs
+    restart: unless-stopped
+
+volumes:
+  fet-jobs:

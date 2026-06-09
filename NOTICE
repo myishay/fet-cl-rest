@@ -1,0 +1,29 @@
+fet-cl-rest
+===========
+
+This service wraps FET (Free Timetabling Software) by invoking its UNMODIFIED
+command-line binary `fet-cl` as a separate subprocess.
+
+FET — Free Timetabling Software
+  Copyright (C) 2002-2026 Liviu Lalescu, Volker Dirr
+  Homepage: https://lalescu.ro/liviu/fet
+  License:  GNU Affero General Public License, version 3 (AGPL-3.0-or-later)
+
+The container image in this repository downloads and builds FET from the
+official upstream source release (see the Dockerfile `FET_VERSION` /
+`FET_URL` build args). FET's source is therefore obtainable from the same URL
+the image is built from:
+
+  https://lalescu.ro/liviu/fet/download.html
+
+AGPL-3.0 network clause (section 13): because this service offers FET's
+functionality to users over a network, operators must make the complete
+corresponding source of the AGPL-covered program available to those users.
+This repository builds the unmodified upstream binary; if you modify FET
+itself, you must publish your modified FET source to your users as well.
+
+This wrapper (the `app/` Python package, Dockerfile, and tests) is a separate
+program that communicates with `fet-cl` only as a subprocess. It is likewise
+distributed under AGPL-3.0-or-later to keep the combined service compliant.
+
+This is a summary, not legal advice.
