@@ -48,7 +48,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=fet-build /out/usr/local/bin/fet-cl /usr/local/bin/fet-cl
 
 WORKDIR /srv
-COPY pyproject.toml README.md NOTICE ./
+COPY pyproject.toml README.md NOTICE LICENSE ./
 COPY app ./app
 
 RUN pip install --no-cache-dir .

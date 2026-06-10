@@ -118,6 +118,18 @@ jobs. Persistent storage is a deliberate, documented extension point.
 See [`docs/superpowers/specs/2026-06-09-fet-cl-rest-design.md`](docs/superpowers/specs/2026-06-09-fet-cl-rest-design.md)
 for the full design.
 
-## License
+## License & compliance
 
-AGPL-3.0-or-later (matching FET). See [`NOTICE`](./NOTICE).
+This project is licensed **AGPL-3.0-or-later** — see [`LICENSE`](./LICENSE) for
+the full text and [`NOTICE`](./NOTICE) for attribution. It wraps the
+**unmodified** upstream `fet-cl` binary (FET, also AGPL-3.0) as a separate
+subprocess.
+
+Operator notes (a summary, not legal advice):
+
+- **Building the image** downloads FET's source from a pinned upstream URL
+  (`FET_VERSION` / `FET_URL` build args) and builds it unmodified.
+- **Distributing the image** conveys the `fet-cl` binary (**AGPL-3.0**); its
+  corresponding source is the pinned upstream release recorded in `NOTICE`. The
+  `LICENSE` and `NOTICE` files are baked into the image (`/srv`) so they travel
+  with it.
