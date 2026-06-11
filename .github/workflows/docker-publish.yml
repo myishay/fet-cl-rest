@@ -8,6 +8,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
@@ -25,6 +29,14 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
+      # Single source of truth: the FET_VERSION build arg in the Dockerfile.
+      - name: Read fet-cl version from Dockerfile
+        id: fet
+        run: |
+          version="$(grep -oP '^ARG FET_VERSION=\K.*' Dockerfile)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "fet-cl version: $version"
 
       # Only log in when we intend to push (i.e. not on pull_request).
       - name: Log in to GHCR
@@ -46,11 +58,14 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=sha
+            type=raw,value=fet-${{ steps.fet.outputs.version }}
 
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
+          build-args: |
+            FET_VERSION=${{ steps.fet.outputs.version }}
           # PRs build only (verify the image compiles); pushes/tags publish.
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
