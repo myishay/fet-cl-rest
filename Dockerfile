@@ -21,8 +21,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
-RUN curl -fL "${FET_URL}" -o "${FET_TARBALL}" \
-    && tar -xf "${FET_TARBALL}" \
+# Fetch via ADD (handled by the BuildKit daemon, natively) rather than a RUN
+# curl: for the arm64 build under QEMU emulation, an emulated TLS handshake to
+# the upstream host stalls and gets reset. ADD downloads on the host instead;
+# only the local tar extraction runs emulated.
+ADD "${FET_URL}" "${FET_TARBALL}"
+RUN tar -xf "${FET_TARBALL}" \
     && mv "fet-${FET_VERSION}" fet
 
 # Build with the Qt5 qmake toolchain. This compiles both `fet` (GUI) and the
