@@ -1,10 +1,11 @@
 services:
   fet-cl-rest:
-    build:
-      context: .
-      args:
-        FET_VERSION: "7.8.6"
-    image: fet-cl-rest:latest
+    image: ghcr.io/myishay/fet-cl-rest:fet-7.8.6
+    # To build locally instead of pulling the published image, uncomment:
+    # build:
+    #   context: .
+    #   args:
+    #     FET_VERSION: "7.8.6"
     ports:
       - "8000:8000"
     environment:

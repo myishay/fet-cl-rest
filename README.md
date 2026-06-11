@@ -15,7 +15,11 @@ the solved timetables (HTML / XML / CSV), packaged as a downloadable zip.
 ## Quick start (Docker)
 
 ```bash
-docker compose up --build
+# Pulls the published image from GHCR (ghcr.io/myishay/fet-cl-rest)
+docker compose up
+# ...or build the image locally: uncomment the `build:` block in
+# docker-compose.yml, then run `docker compose up --build`
+
 # Swagger UI:   http://localhost:8000/docs
 # ReDoc:        http://localhost:8000/redoc
 # OpenAPI JSON: http://localhost:8000/openapi.json
