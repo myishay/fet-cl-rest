@@ -15,6 +15,9 @@ the solved timetables (HTML / XML / CSV), packaged as a downloadable zip.
 ## Quick start (Docker)
 
 ```bash
+git clone https://github.com/myishay/fet-cl-rest.git
+cd fet-cl-rest
+
 # Pulls the published image from GHCR (ghcr.io/myishay/fet-cl-rest)
 docker compose up
 # ...or build the image locally: uncomment the `build:` block in
